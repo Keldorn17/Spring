@@ -7,10 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DemoController {
-    private final Coach myCoach;
+    private Coach myCoach;
+
+//    @Autowired
+//    DemoController(Coach coach) {
+//        myCoach = coach;
+//    }
 
     @Autowired
-    DemoController(Coach coach) {
+    public void setCoach(Coach coach) { // This method could be named anything.
         myCoach = coach;
     }
 
