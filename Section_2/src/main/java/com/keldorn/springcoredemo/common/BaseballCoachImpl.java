@@ -3,10 +3,9 @@ package com.keldorn.springcoredemo.common;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CricketCoachImpl implements Coach {
-
+public class BaseballCoachImpl implements Coach {
     @Override
     public String getDailyWorkout() {
-        return "Practice fast bowling for 15 minutes.";
+        return "Spend 30 minutes in batting practice.";
     }
 }
