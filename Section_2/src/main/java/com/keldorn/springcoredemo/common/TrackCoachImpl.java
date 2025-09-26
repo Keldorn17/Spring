@@ -1,11 +1,13 @@
 package com.keldorn.springcoredemo.common;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary
 public class TrackCoachImpl implements Coach {
+
+    public TrackCoachImpl() {
+        System.out.println("In constructor: " + getClass().getSimpleName());
+    }
 
     @Override
     public String getDailyWorkout() {
