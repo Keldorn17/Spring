@@ -13,7 +13,7 @@ public class Section3Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(String[] args) {
+    public CommandLineRunner commandLineRunner() {
         return runner -> {
             System.out.println("Hello World");
         };
