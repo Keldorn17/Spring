@@ -1,4 +1,4 @@
-package com.keldorn.section_4.dto;
+package com.keldorn.section_4.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
