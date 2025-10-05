@@ -1,10 +1,10 @@
-package com.keldorn.employeerest.dao;
+package com.keldorn.employeerest.repository;
 
 import com.keldorn.employeerest.entity.Employee;
 
 import java.util.List;
 
-public interface EmployeeDao {
+public interface EmployeeRepository {
 
     List<Employee> findAll();
 }

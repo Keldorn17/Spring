@@ -1,4 +1,4 @@
-package com.keldorn.employeerest.dao;
+package com.keldorn.employeerest.repository;
 
 import com.keldorn.employeerest.entity.Employee;
 import jakarta.persistence.EntityManager;
@@ -8,12 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class EmployeeDaoImpl implements EmployeeDao {
+public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     private final EntityManager entityManager;
 
     @Autowired
-    public EmployeeDaoImpl(EntityManager entityManager) {
+    public EmployeeRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
