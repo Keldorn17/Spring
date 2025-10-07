@@ -21,4 +21,19 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public List<Employee> findAll() {
         return entityManager.createQuery("FROM Employee", Employee.class).getResultList();
     }
+
+    @Override
+    public Employee findById(int id) {
+        return entityManager.find(Employee.class, id);
+    }
+
+    @Override
+    public Employee save(Employee employee) {
+        return entityManager.merge(employee);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        entityManager.remove(findById(id));
+    }
 }
