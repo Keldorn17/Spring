@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -34,11 +35,7 @@ public class EmployeeController {
 
     @GetMapping("/employees/{id}")
     public Employee getEmployeeById(@PathVariable int id) {
-        Employee employee = employeeService.findById(id);
-        if (employee == null) {
-            throw new EmployeeNotFoundException("Employee id not found: " + id);
-        }
-        return employee;
+        return getEmployeeOrThrow(id);
     }
 
     @PostMapping("/employees")
@@ -49,6 +46,8 @@ public class EmployeeController {
 
     @DeleteMapping("/employees/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable int id) {
+        getEmployeeOrThrow(id);
+
         employeeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
@@ -60,10 +59,7 @@ public class EmployeeController {
 
     @PatchMapping("/employees/{id}")
     public Employee patchEmployee(@PathVariable int id, @RequestBody Map<String, Object> patchPayload) {
-        Employee employee = employeeService.findById(id);
-        if (employee == null) {
-            throw new EmployeeNotFoundException("Employee id not found: " + id);
-        }
+        Employee employee = getEmployeeOrThrow(id);
 
         if (patchPayload.containsKey("id")) {
             throw new EmployeeIdNotAllowedException("Employee id not allowed in request body: " + id);
@@ -80,5 +76,10 @@ public class EmployeeController {
 
         employeeNode.setAll(patchNode);
         return objectMapper.convertValue(employeeNode, Employee.class);
+    }
+
+    private Employee getEmployeeOrThrow(int id) {
+        return Optional.ofNullable(employeeService.findById(id))
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee id not found: " + id));
     }
 }
