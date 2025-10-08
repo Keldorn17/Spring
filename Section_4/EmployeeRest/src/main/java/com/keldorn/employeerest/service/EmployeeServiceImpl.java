@@ -1,42 +1,52 @@
 package com.keldorn.employeerest.service;
 
-import com.keldorn.employeerest.repository.EmployeeRepository;
+import com.keldorn.employeerest.dto.EmployeeRequest;
 import com.keldorn.employeerest.entity.Employee;
+import com.keldorn.employeerest.exception.EmployeeNotFoundException;
+import com.keldorn.employeerest.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeRepository repository;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeServiceImpl(EmployeeRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public List<Employee> findAll() {
-        return employeeRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Employee findById(int id) {
-        return employeeRepository.findById(id);
+        return repository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee id not found: " + id));
     }
 
     @Override
-    @Transactional
     public Employee save(Employee employee) {
-        return employeeRepository.save(employee);
+        return repository.save(employee);
     }
 
     @Override
-    @Transactional
+    public Employee save(int id, EmployeeRequest request) {
+        Employee employee = findById(id);
+        employee.setEmail(request.getEmail());
+        employee.setFirstName(request.getFirstName());
+        employee.setLastName(request.getLastName());
+        return employee;
+    }
+
+    @Override
     public void deleteById(int id) {
-        employeeRepository.deleteById(id);
+        findById(id);
+        repository.deleteById(id);
     }
 }

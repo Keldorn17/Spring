@@ -1,15 +1,13 @@
-package com.keldorn.employeerest.service;
+package com.keldorn.employeerest.dao;
 
-import com.keldorn.employeerest.dto.EmployeeRequest;
 import com.keldorn.employeerest.entity.Employee;
 
 import java.util.List;
 
-public interface EmployeeService {
+public interface EmployeeDao {
 
     List<Employee> findAll();
     Employee findById(int id);
     Employee save(Employee employee);
-    Employee save(int id, EmployeeRequest request);
     void deleteById(int id);
 }
