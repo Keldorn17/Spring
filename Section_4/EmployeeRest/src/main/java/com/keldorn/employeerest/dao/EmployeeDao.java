@@ -4,6 +4,7 @@ import com.keldorn.employeerest.entity.Employee;
 
 import java.util.List;
 
+@Deprecated
 public interface EmployeeDao {
 
     List<Employee> findAll();
