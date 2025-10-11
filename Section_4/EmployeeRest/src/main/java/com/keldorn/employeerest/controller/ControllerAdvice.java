@@ -1,6 +1,5 @@
 package com.keldorn.employeerest.controller;
 
-import com.keldorn.employeerest.exception.EmployeeIdNotAllowedException;
 import com.keldorn.employeerest.exception.EmployeeNotFoundException;
 import com.keldorn.employeerest.model.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -17,18 +16,6 @@ public class ControllerAdvice {
     @ExceptionHandler(EmployeeNotFoundException.class)
     public ResponseEntity<Object> handleException(EmployeeNotFoundException exception) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .type(CLIENT_ERROR)
-                .title(httpStatus.getReasonPhrase())
-                .detail(exception.getMessage())
-                .statusCode(httpStatus)
-                .build();
-        return buildResponse(errorResponse);
-    }
-
-    @ExceptionHandler(EmployeeIdNotAllowedException.class)
-    public ResponseEntity<Object> handleException(EmployeeIdNotAllowedException exception) {
-        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .type(CLIENT_ERROR)
                 .title(httpStatus.getReasonPhrase())
