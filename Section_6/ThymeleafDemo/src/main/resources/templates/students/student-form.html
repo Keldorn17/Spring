@@ -3,16 +3,41 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Student Form</title>
 </head>
 <body>
+<div class="container">
     <h3>Student Registration Form</h3>
-    <form th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-        <label for="firstName">First Name: </label>
-        <input type="text" id="firstName" th:field="*{firstName}">
-        <label for="lastName">Last Name: </label>
-        <input type="text" id="lastName" th:field="*{lastName}">
-        <input type="submit" value="Submit">
+    <form th:action="@{/processStudentForm}" th:object="${student}" method="POST" class="form">
+        <label for="firstName" class="form-label">First Name: </label>
+        <input type="text" id="firstName" th:field="*{firstName}" class="form-control">
+        <label for="lastName" class="form-label">Last Name: </label>
+        <input type="text" id="lastName" th:field="*{lastName}" class="form-control">
+        <label for="country" class="form-label">Country: </label>
+
+        <select th:field="*{country}" id="country" class="form-select">
+            <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}"/>
+        </select>
+
+        <div class="mt-2">
+            <label class="form-label">Favorite Programming Language:</label>
+
+            <div class="btn-group" role="group">
+                <span th:each="language : ${languages}" class="m-1">
+                    <input type="radio" class="btn-check"
+                           th:field="*{favoriteLanguage}"
+                           th:id="${language}"
+                           th:value="${language}"/>
+                    <label class="btn btn-outline-success"
+                           th:for="${language}"
+                           th:text="${language}"/>
+                </span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
     </form>
+</div>
 </body>
 </html>

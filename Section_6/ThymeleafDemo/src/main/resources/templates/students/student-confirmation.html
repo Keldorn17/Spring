@@ -3,10 +3,16 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Student Confirmation</title>
 </head>
 <body>
+<div class="container">
     <h3>Student Confirmation</h3>
     <p th:text="'The student is confirmed: ' + ${student.firstName} + ' ' + ${student.lastName}"/>
+    <p th:text="'Country: ' + ${student.country}"/>
+    <p th:text="'Favorite Programming Language: ' + ${student.favoriteLanguage}"/>
+</div>
 </body>
 </html>
