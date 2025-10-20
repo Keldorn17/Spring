@@ -36,6 +36,21 @@
                 </span>
             </div>
         </div>
+
+        <div class="mt-2">
+            <label class="form-label">Favorite Operating Systems:</label>
+
+            <div class="btn-group" role="group">
+                <span th:each="system : ${systems}" class="m-1">
+                    <input type="checkbox"
+                           th:field="*{favoriteOpSystems}"
+                           th:id="${system}"
+                           th:value="${system}"/>
+                    <label th:for="${system}"
+                           th:text="${system}"/>
+                </span>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary mt-2">Submit</button>
     </form>
 </div>

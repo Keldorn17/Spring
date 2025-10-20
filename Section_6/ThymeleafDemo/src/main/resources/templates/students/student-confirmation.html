@@ -13,6 +13,10 @@
     <p th:text="'The student is confirmed: ' + ${student.firstName} + ' ' + ${student.lastName}"/>
     <p th:text="'Country: ' + ${student.country}"/>
     <p th:text="'Favorite Programming Language: ' + ${student.favoriteLanguage}"/>
+    <p>Favorite Operating Systems:</p>
+    <ul>
+        <li th:each="system : ${student.favoriteOpSystems}" th:text="${system}"/>
+    </ul>
 </div>
 </body>
 </html>
