@@ -1,5 +1,6 @@
 package com.keldorn.validation.model;
 
+import com.keldorn.validation.annotation.CourseCode;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,7 @@ public class Customer {
 
     @Pattern(regexp = "^[a-zA-Z0-9]{5}", message = "only 5 characters/digits")
     private String postalCode;
+
+    @CourseCode(value = "LUV", message = "must start with LUV")
+    private String courseCode;
 }
