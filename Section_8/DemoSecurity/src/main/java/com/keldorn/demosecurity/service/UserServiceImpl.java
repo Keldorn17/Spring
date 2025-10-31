@@ -2,6 +2,7 @@ package com.keldorn.demosecurity.service;
 
 import com.keldorn.demosecurity.entity.Role;
 import com.keldorn.demosecurity.entity.User;
+import com.keldorn.demosecurity.entity.WebUser;
 import com.keldorn.demosecurity.repository.RoleRepository;
 import com.keldorn.demosecurity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,19 @@ public class UserServiceImpl implements UserService {
     public User findByUserName(String userName) {
         return userRepository.findByUserName(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
+    }
+
+    @Override
+    public void save(WebUser webUser) {
+        User user = new User();
+
+        user.setUserName(webUser.getUsername());
+        user.setPassword(webUser.getPassword());
+        user.setEmail(webUser.getEmail());
+        user.setFirstName(webUser.getFirstName());
+        user.setLastName(webUser.getLastName());
+        user.setEnabled(true);
+        user.setRoles(Arrays.asList(roleRepository.findRoleByName("ROLE_EMPLOYEE")));
     }
 
     @Override

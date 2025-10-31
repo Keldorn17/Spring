@@ -11,16 +11,18 @@ import org.springframework.security.web.SecurityFilterChain;
 public class AuthoritiesSecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
         httpSecurity.authorizeHttpRequests(authorize ->
                         authorize.requestMatchers("/css/**").permitAll()
                                 .requestMatchers("/").hasRole(Roles.EMPLOYEE.toString())
                                 .requestMatchers("/leaders").hasRole(Roles.MANAGER.toString())
                                 .requestMatchers("/systems").hasRole(Roles.ADMIN.toString())
+                                .requestMatchers("/register").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(form ->
                         form.loginPage("/login")
                                 .loginProcessingUrl("/authenticate")
+                                .successHandler(customAuthenticationSuccessHandler)
                                 .permitAll())
                 .logout(LogoutConfigurer::permitAll)
                 .exceptionHandling(configurer ->
