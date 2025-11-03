@@ -5,7 +5,7 @@ import com.keldorn.cruddemo.domain.entity.InstructorDetail;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface InstructorDetailMapping {
+public interface InstructorDetailMapper {
 
     InstructorDetailDto toDto(InstructorDetail instructorDetail);
 }

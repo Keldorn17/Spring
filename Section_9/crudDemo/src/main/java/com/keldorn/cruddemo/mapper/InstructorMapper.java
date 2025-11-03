@@ -9,5 +9,6 @@ import org.mapstruct.Mapping;
 public interface InstructorMapper {
 
     @Mapping(target = "instructorDetailDto", source = "instructorDetail")
+    @Mapping(target = "courseDto", source = "courses")
     InstructorDto toDto(Instructor instructor);
 }

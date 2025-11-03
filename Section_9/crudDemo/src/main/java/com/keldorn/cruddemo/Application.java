@@ -1,7 +1,9 @@
 package com.keldorn.cruddemo;
 
+import com.keldorn.cruddemo.domain.entity.Course;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 import com.keldorn.cruddemo.domain.entity.InstructorDetail;
+import com.keldorn.cruddemo.service.CourseService;
 import com.keldorn.cruddemo.service.InstructorDetailService;
 import com.keldorn.cruddemo.service.InstructorService;
 import org.springframework.boot.CommandLineRunner;
@@ -18,12 +20,14 @@ public class Application {
 
     @Bean
     public CommandLineRunner commandLineRunner(InstructorService instructorService,
-                                               InstructorDetailService instructorDetailService) {
+                                               InstructorDetailService instructorDetailService,
+                                               CourseService courseService) {
 
         return runner -> {
-            findInstructor(instructorService, 1L);
-            findInstructorDetail(instructorDetailService, 1L);
 //            createInstructor(instructorService);
+            findInstructor(instructorService, 3L);
+            findInstructorDetail(instructorDetailService, 3L);
+            findCourseById(courseService, 10L);
 //            deleteInstructor(instructorService, 4L);
         };
     }
@@ -54,7 +58,18 @@ public class Application {
         InstructorDetail instructorDetail =
                 new InstructorDetail("http://www.luv2code.com/youtube", "Luv 2 code");
 
+        Course courseJava = new Course("Java");
+        Course coursePython = new Course("Python");
+
         instructor.setInstructorDetail(instructorDetail);
+        instructor.add(courseJava);
+        instructor.add(coursePython);
         System.out.println("Saving instructor: " +service.save(instructor));
+    }
+
+    private void findCourseById(CourseService service, Long id) {
+
+        System.out.println("Finding Course id: " + id);
+        System.out.println(service.findById(id));
     }
 }

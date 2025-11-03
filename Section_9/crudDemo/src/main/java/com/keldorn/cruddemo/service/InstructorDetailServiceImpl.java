@@ -3,7 +3,7 @@ package com.keldorn.cruddemo.service;
 import com.keldorn.cruddemo.domain.dto.InstructorDetailDto;
 import com.keldorn.cruddemo.domain.entity.InstructorDetail;
 import com.keldorn.cruddemo.exception.InstructorDetailNotFoundException;
-import com.keldorn.cruddemo.mapper.InstructorDetailMapping;
+import com.keldorn.cruddemo.mapper.InstructorDetailMapper;
 import com.keldorn.cruddemo.repository.InstructorDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class InstructorDetailServiceImpl implements InstructorDetailService {
 
-    private final InstructorDetailMapping mapper;
+    private final InstructorDetailMapper mapper;
     private final InstructorDetailRepository repository;
 
     @Autowired
-    public InstructorDetailServiceImpl(InstructorDetailMapping mapper, InstructorDetailRepository repository) {
+    public InstructorDetailServiceImpl(InstructorDetailMapper mapper, InstructorDetailRepository repository) {
         this.mapper = mapper;
         this.repository = repository;
     }
