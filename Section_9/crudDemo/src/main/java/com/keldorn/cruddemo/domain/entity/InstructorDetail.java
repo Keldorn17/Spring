@@ -1,4 +1,4 @@
-package com.keldorn.cruddemo.entity;
+package com.keldorn.cruddemo.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,12 +21,20 @@ public class InstructorDetail {
     @Column(name = "hobby")
     private String hobby;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "instructorDetail", cascade = CascadeType.ALL, orphanRemoval = true)
     private Instructor instructor;
 
     public InstructorDetail(String youtubeChannel, String hobby) {
         this.youtubeChannel = youtubeChannel;
         this.hobby = hobby;
+    }
+
+    @Override
+    public String toString() {
+        return "InstructorDetail{" +
+               "id=" + id +
+               ", youtubeChannel='" + youtubeChannel + '\'' +
+               ", hobby='" + hobby + '\'' +
+               '}';
     }
 }

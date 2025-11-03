@@ -1,8 +1,9 @@
 package com.keldorn.cruddemo;
 
-import com.keldorn.cruddemo.dao.AppDao;
-import com.keldorn.cruddemo.entity.Instructor;
-import com.keldorn.cruddemo.entity.InstructorDetail;
+import com.keldorn.cruddemo.domain.entity.Instructor;
+import com.keldorn.cruddemo.domain.entity.InstructorDetail;
+import com.keldorn.cruddemo.service.InstructorDetailService;
+import com.keldorn.cruddemo.service.InstructorService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,14 +17,37 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(AppDao appDao) {
+    public CommandLineRunner commandLineRunner(InstructorService instructorService,
+                                               InstructorDetailService instructorDetailService) {
 
         return runner -> {
-            createInstructor(appDao);
+            findInstructor(instructorService, 1L);
+            findInstructorDetail(instructorDetailService, 1L);
+//            createInstructor(instructorService);
+//            deleteInstructor(instructorService, 4L);
         };
     }
 
-    private void createInstructor(AppDao appDao) {
+    private void deleteInstructor(InstructorService service, Long id) {
+
+        System.out.println("Deleting instructor by id: " + id);
+        service.deleteById(id);
+        System.out.println("Deleted successfully");
+    }
+
+    private void findInstructor(InstructorService service, Long id) {
+
+        System.out.println("Finding instructor id: " + id);
+        System.out.println(service.findById(id));
+    }
+
+    private void findInstructorDetail(InstructorDetailService service, Long id) {
+
+        System.out.println("Finding instructorDetail id: " + id);
+        System.out.println(service.findById(id));
+    }
+
+    private void createInstructor(InstructorService service) {
 
         Instructor instructor = new Instructor("Chad", "Darby", "darby@luv2code.com");
 
@@ -31,8 +55,6 @@ public class Application {
                 new InstructorDetail("http://www.luv2code.com/youtube", "Luv 2 code");
 
         instructor.setInstructorDetail(instructorDetail);
-        System.out.println("Saving instructor: " + instructor);
-
-        appDao.save(instructor);
+        System.out.println("Saving instructor: " +service.save(instructor));
     }
 }

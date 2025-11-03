@@ -1,4 +1,4 @@
-package com.keldorn.cruddemo.entity;
+package com.keldorn.cruddemo.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -24,7 +24,7 @@ public class Instructor {
     @Column(name = "email")
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
 
