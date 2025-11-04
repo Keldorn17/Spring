@@ -1,5 +1,6 @@
 package com.keldorn.cruddemo;
 
+import com.keldorn.cruddemo.domain.dto.InstructorRequest;
 import com.keldorn.cruddemo.domain.entity.Course;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 import com.keldorn.cruddemo.domain.entity.InstructorDetail;
@@ -29,8 +30,13 @@ public class Application {
             findInstructorDetail(instructorDetailService, 3L);
             findCourseById(courseService, 10L);
             findCourseByInstructorId(courseService, 3L);
+            updateInstructor(instructorService, new InstructorRequest("asd", "asd", "asd"), 7L);
 //            deleteInstructor(instructorService, 4L);
         };
+    }
+
+    private void updateInstructor(InstructorService instructorService, InstructorRequest instructorRequest, Long id) {
+        System.out.println(instructorService.update(instructorRequest, id));
     }
 
     private void deleteInstructor(InstructorService service, Long id) {

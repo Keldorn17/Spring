@@ -1,6 +1,7 @@
 package com.keldorn.cruddemo.service;
 
-import com.keldorn.cruddemo.domain.dto.InstructorDto;
+import com.keldorn.cruddemo.domain.dto.InstructorResponse;
+import com.keldorn.cruddemo.domain.dto.InstructorRequest;
 import com.keldorn.cruddemo.domain.dto.InstructorWithCoursesDto;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 import com.keldorn.cruddemo.exception.InstructorNotFoundException;
@@ -37,7 +38,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
-    public InstructorDto findById(Long id) {
+    public InstructorResponse findById(Long id) {
         return mapper.toInstructorDto(findByIdOrThrow(id));
     }
 
@@ -50,5 +51,14 @@ public class InstructorServiceImpl implements InstructorService {
     public void deleteById(Long id) {
         findByIdOrThrow(id);
         repository.deleteById(id);
+    }
+
+    @Override
+    public InstructorWithCoursesDto update(InstructorRequest update, Long id) {
+        var instructor = findByIdOrThrow(id);
+        instructor.setFirstName(update.firstName());
+        instructor.setLastName(update.lastName());
+        instructor.setEmail(update.email());
+        return mapper.toInstructorWithCoursesDto(repository.save(instructor));
     }
 }

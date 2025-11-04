@@ -1,6 +1,6 @@
 package com.keldorn.cruddemo.service;
 
-import com.keldorn.cruddemo.domain.dto.InstructorDetailDto;
+import com.keldorn.cruddemo.domain.dto.InstructorDetailResponse;
 import com.keldorn.cruddemo.domain.entity.InstructorDetail;
 import com.keldorn.cruddemo.exception.InstructorDetailNotFoundException;
 import com.keldorn.cruddemo.mapper.InstructorDetailMapper;
@@ -26,12 +26,12 @@ public class InstructorDetailServiceImpl implements InstructorDetailService {
     }
 
     @Override
-    public InstructorDetailDto findById(Long id) {
+    public InstructorDetailResponse findById(Long id) {
         return mapper.toDto(findByIdOrThrow(id));
     }
 
     @Override
-    public InstructorDetailDto save(InstructorDetail instructorDetail) {
+    public InstructorDetailResponse save(InstructorDetail instructorDetail) {
         return mapper.toDto(repository.save(instructorDetail));
     }
 

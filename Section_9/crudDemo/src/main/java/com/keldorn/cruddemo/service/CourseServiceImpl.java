@@ -1,6 +1,6 @@
 package com.keldorn.cruddemo.service;
 
-import com.keldorn.cruddemo.domain.dto.CourseDto;
+import com.keldorn.cruddemo.domain.dto.CourseResponse;
 import com.keldorn.cruddemo.domain.entity.Course;
 import com.keldorn.cruddemo.exception.CourseNotFoundException;
 import com.keldorn.cruddemo.mapper.CourseMapper;
@@ -28,12 +28,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseDto findById(Long id) {
+    public CourseResponse findById(Long id) {
         return mapper.toDto(findByIdOrThrow(id));
     }
 
     @Override
-    public CourseDto save(Course course) {
+    public CourseResponse save(Course course) {
         return mapper.toDto(repository.save(course));
     }
 
@@ -44,7 +44,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseDto> findCoursesByInstructorId(Long instructorId) {
+    public List<CourseResponse> findCoursesByInstructorId(Long instructorId) {
         var courses = repository.findCoursesByInstructorId(instructorId);
         if (courses.isEmpty()) {
             throw new CourseNotFoundException("No course found with instructor id: " + instructorId);
