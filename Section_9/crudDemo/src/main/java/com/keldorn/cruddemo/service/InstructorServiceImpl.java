@@ -1,6 +1,7 @@
 package com.keldorn.cruddemo.service;
 
 import com.keldorn.cruddemo.domain.dto.InstructorDto;
+import com.keldorn.cruddemo.domain.dto.InstructorWithCoursesDto;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 import com.keldorn.cruddemo.exception.InstructorNotFoundException;
 import com.keldorn.cruddemo.mapper.InstructorMapper;
@@ -25,14 +26,24 @@ public class InstructorServiceImpl implements InstructorService {
                 .orElseThrow(() -> new InstructorNotFoundException("Instructor not found by id: " + id));
     }
 
-    @Override
-    public InstructorDto findById(Long id) {
-        return mapper.toDto(findByIdOrThrow(id));
+    private Instructor findByIdEagerOrThrow(Long id) {
+        return repository.findWithCoursesById(id)
+                .orElseThrow(() -> new InstructorNotFoundException("Instructor not found by id: " + id));
     }
 
     @Override
-    public InstructorDto save(Instructor instructor) {
-        return mapper.toDto(repository.save(instructor));
+    public InstructorWithCoursesDto findByIdWithCourses(Long id) {
+        return mapper.toInstructorWithCoursesDto(findByIdEagerOrThrow(id));
+    }
+
+    @Override
+    public InstructorDto findById(Long id) {
+        return mapper.toInstructorDto(findByIdOrThrow(id));
+    }
+
+    @Override
+    public InstructorWithCoursesDto save(Instructor instructor) {
+        return mapper.toInstructorWithCoursesDto(repository.save(instructor));
     }
 
     @Override

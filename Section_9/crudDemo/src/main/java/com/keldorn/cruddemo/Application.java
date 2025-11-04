@@ -28,6 +28,7 @@ public class Application {
             findInstructor(instructorService, 3L);
             findInstructorDetail(instructorDetailService, 3L);
             findCourseById(courseService, 10L);
+            findCourseByInstructorId(courseService, 3L);
 //            deleteInstructor(instructorService, 4L);
         };
     }
@@ -42,7 +43,8 @@ public class Application {
     private void findInstructor(InstructorService service, Long id) {
 
         System.out.println("Finding instructor id: " + id);
-        System.out.println(service.findById(id));
+        System.out.println("Eager: " + service.findByIdWithCourses(id));
+        System.out.println("Lazy: " + service.findById(id));
     }
 
     private void findInstructorDetail(InstructorDetailService service, Long id) {
@@ -71,5 +73,9 @@ public class Application {
 
         System.out.println("Finding Course id: " + id);
         System.out.println(service.findById(id));
+    }
+
+    private void findCourseByInstructorId(CourseService service, Long instructorId) {
+        System.out.printf("Courses (Instructor id: %d): %s%n", instructorId, service.findCoursesByInstructorId(instructorId));
     }
 }

@@ -8,6 +8,8 @@ import com.keldorn.cruddemo.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CourseServiceImpl implements CourseService {
 
@@ -39,5 +41,16 @@ public class CourseServiceImpl implements CourseService {
     public void deleteById(Long id) {
         findByIdOrThrow(id);
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<CourseDto> findCoursesByInstructorId(Long instructorId) {
+        var courses = repository.findCoursesByInstructorId(instructorId);
+        if (courses.isEmpty()) {
+            throw new CourseNotFoundException("No course found with instructor id: " + instructorId);
+        }
+        return courses.stream()
+                .map(mapper::toDto)
+                .toList();
     }
 }
