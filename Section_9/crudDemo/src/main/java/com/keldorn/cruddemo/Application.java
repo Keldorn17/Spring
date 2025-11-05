@@ -5,6 +5,7 @@ import com.keldorn.cruddemo.domain.dto.instructor.InstructorRequest;
 import com.keldorn.cruddemo.domain.entity.Course;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 import com.keldorn.cruddemo.domain.entity.InstructorDetail;
+import com.keldorn.cruddemo.domain.entity.Review;
 import com.keldorn.cruddemo.service.CourseService;
 import com.keldorn.cruddemo.service.InstructorDetailService;
 import com.keldorn.cruddemo.service.InstructorService;
@@ -26,14 +27,7 @@ public class Application {
                                                CourseService courseService) {
 
         return runner -> {
-//            createInstructor(instructorService);
-            findInstructor(instructorService, 3L);
-            findInstructorDetail(instructorDetailService, 3L);
-            findCourseById(courseService, 10L);
-            findCourseByInstructorId(courseService, 3L);
-            updateInstructor(instructorService, new InstructorRequest("asd", "asd", "asd"), 7L);
-            updateCourse(courseService, new CourseRequest("Zig"), 11L);
-//            deleteInstructor(instructorService, 9L);
+            findCourseWithReviewsById(courseService, 12L);
         };
     }
 
@@ -84,8 +78,23 @@ public class Application {
         System.out.println(service.findById(id));
     }
 
+    private void findCourseWithReviewsById(CourseService service, Long id) {
+
+        System.out.println(service.findWithReviewById(id));
+    }
+
     private void findCourseByInstructorId(CourseService service, Long instructorId) {
 
         System.out.printf("Courses (Instructor id: %d): %s%n", instructorId, service.findCoursesByInstructorId(instructorId));
+    }
+
+    private void createCourseAndReviews(CourseService service) {
+        Course course = new Course("Pacman");
+
+        course.addReview(new Review("Great course"));
+        course.addReview(new Review("Cool course"));
+        course.addReview(new Review("Worst course"));
+
+        service.save(course);
     }
 }
