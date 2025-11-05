@@ -1,8 +1,8 @@
 package com.keldorn.cruddemo.service;
 
-import com.keldorn.cruddemo.domain.dto.InstructorResponse;
-import com.keldorn.cruddemo.domain.dto.InstructorRequest;
-import com.keldorn.cruddemo.domain.dto.InstructorWithCoursesDto;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorResponse;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorRequest;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorWithCoursesDto;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 
 public interface InstructorService {

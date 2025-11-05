@@ -1,7 +1,7 @@
 package com.keldorn.cruddemo.mapper;
 
-import com.keldorn.cruddemo.domain.dto.InstructorResponse;
-import com.keldorn.cruddemo.domain.dto.InstructorWithCoursesDto;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorResponse;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorWithCoursesDto;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

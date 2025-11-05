@@ -1,6 +1,6 @@
 package com.keldorn.cruddemo.service;
 
-import com.keldorn.cruddemo.domain.dto.InstructorDetailResponse;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorDetailResponse;
 import com.keldorn.cruddemo.domain.entity.InstructorDetail;
 import com.keldorn.cruddemo.exception.InstructorDetailNotFoundException;
 import com.keldorn.cruddemo.mapper.InstructorDetailMapper;

@@ -1,4 +1,6 @@
-package com.keldorn.cruddemo.domain.dto;
+package com.keldorn.cruddemo.domain.dto.instructor;
+
+import com.keldorn.cruddemo.domain.dto.course.CourseResponse;
 
 import java.util.List;
 

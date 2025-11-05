@@ -1,8 +1,8 @@
 package com.keldorn.cruddemo.service;
 
-import com.keldorn.cruddemo.domain.dto.InstructorResponse;
-import com.keldorn.cruddemo.domain.dto.InstructorRequest;
-import com.keldorn.cruddemo.domain.dto.InstructorWithCoursesDto;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorRequest;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorResponse;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorWithCoursesDto;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 import com.keldorn.cruddemo.exception.InstructorNotFoundException;
 import com.keldorn.cruddemo.mapper.InstructorMapper;
@@ -49,8 +49,9 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public void deleteById(Long id) {
-        findByIdOrThrow(id);
-        repository.deleteById(id);
+        var instructor = findByIdEagerOrThrow(id);
+        instructor.getCourses().forEach(c -> c.setInstructor(null));
+        repository.delete(instructor);
     }
 
     @Override

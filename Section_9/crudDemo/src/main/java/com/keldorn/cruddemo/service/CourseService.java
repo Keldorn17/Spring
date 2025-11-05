@@ -1,6 +1,7 @@
 package com.keldorn.cruddemo.service;
 
-import com.keldorn.cruddemo.domain.dto.CourseResponse;
+import com.keldorn.cruddemo.domain.dto.course.CourseRequest;
+import com.keldorn.cruddemo.domain.dto.course.CourseResponse;
 import com.keldorn.cruddemo.domain.entity.Course;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface CourseService {
     CourseResponse save(Course course);
     void deleteById(Long id);
     List<CourseResponse> findCoursesByInstructorId(Long instructorId);
+    CourseResponse update(CourseRequest request, Long id);
 }

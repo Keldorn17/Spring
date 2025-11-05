@@ -1,6 +1,7 @@
 package com.keldorn.cruddemo;
 
-import com.keldorn.cruddemo.domain.dto.InstructorRequest;
+import com.keldorn.cruddemo.domain.dto.course.CourseRequest;
+import com.keldorn.cruddemo.domain.dto.instructor.InstructorRequest;
 import com.keldorn.cruddemo.domain.entity.Course;
 import com.keldorn.cruddemo.domain.entity.Instructor;
 import com.keldorn.cruddemo.domain.entity.InstructorDetail;
@@ -31,12 +32,17 @@ public class Application {
             findCourseById(courseService, 10L);
             findCourseByInstructorId(courseService, 3L);
             updateInstructor(instructorService, new InstructorRequest("asd", "asd", "asd"), 7L);
-//            deleteInstructor(instructorService, 4L);
+            updateCourse(courseService, new CourseRequest("Zig"), 11L);
+//            deleteInstructor(instructorService, 9L);
         };
     }
 
-    private void updateInstructor(InstructorService instructorService, InstructorRequest instructorRequest, Long id) {
-        System.out.println(instructorService.update(instructorRequest, id));
+    private void updateInstructor(InstructorService service, InstructorRequest request, Long id) {
+        System.out.println(service.update(request, id));
+    }
+
+    private void updateCourse(CourseService service, CourseRequest request, Long id) {
+        System.out.println(service.update(request, id));
     }
 
     private void deleteInstructor(InstructorService service, Long id) {
@@ -48,14 +54,12 @@ public class Application {
 
     private void findInstructor(InstructorService service, Long id) {
 
-        System.out.println("Finding instructor id: " + id);
         System.out.println("Eager: " + service.findByIdWithCourses(id));
         System.out.println("Lazy: " + service.findById(id));
     }
 
     private void findInstructorDetail(InstructorDetailService service, Long id) {
 
-        System.out.println("Finding instructorDetail id: " + id);
         System.out.println(service.findById(id));
     }
 
@@ -72,16 +76,16 @@ public class Application {
         instructor.setInstructorDetail(instructorDetail);
         instructor.add(courseJava);
         instructor.add(coursePython);
-        System.out.println("Saving instructor: " +service.save(instructor));
+        System.out.println("Saving instructor: " + service.save(instructor));
     }
 
     private void findCourseById(CourseService service, Long id) {
 
-        System.out.println("Finding Course id: " + id);
         System.out.println(service.findById(id));
     }
 
     private void findCourseByInstructorId(CourseService service, Long instructorId) {
+
         System.out.printf("Courses (Instructor id: %d): %s%n", instructorId, service.findCoursesByInstructorId(instructorId));
     }
 }

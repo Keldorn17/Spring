@@ -1,6 +1,7 @@
 package com.keldorn.cruddemo.service;
 
-import com.keldorn.cruddemo.domain.dto.CourseResponse;
+import com.keldorn.cruddemo.domain.dto.course.CourseRequest;
+import com.keldorn.cruddemo.domain.dto.course.CourseResponse;
 import com.keldorn.cruddemo.domain.entity.Course;
 import com.keldorn.cruddemo.exception.CourseNotFoundException;
 import com.keldorn.cruddemo.mapper.CourseMapper;
@@ -52,5 +53,13 @@ public class CourseServiceImpl implements CourseService {
         return courses.stream()
                 .map(mapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public CourseResponse update(CourseRequest request, Long id) {
+        var course = findByIdOrThrow(id);
+        course.setTitle(request.title());
+
+        return mapper.toDto(repository.save(course));
     }
 }
