@@ -2,13 +2,12 @@ package com.keldorn.cruddemo;
 
 import com.keldorn.cruddemo.domain.dto.course.CourseRequest;
 import com.keldorn.cruddemo.domain.dto.instructor.InstructorRequest;
-import com.keldorn.cruddemo.domain.entity.Course;
-import com.keldorn.cruddemo.domain.entity.Instructor;
-import com.keldorn.cruddemo.domain.entity.InstructorDetail;
-import com.keldorn.cruddemo.domain.entity.Review;
+import com.keldorn.cruddemo.domain.dto.student.StudentRequest;
+import com.keldorn.cruddemo.domain.entity.*;
 import com.keldorn.cruddemo.service.CourseService;
 import com.keldorn.cruddemo.service.InstructorDetailService;
 import com.keldorn.cruddemo.service.InstructorService;
+import com.keldorn.cruddemo.service.StudentService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,11 +23,48 @@ public class Application {
     @Bean
     public CommandLineRunner commandLineRunner(InstructorService instructorService,
                                                InstructorDetailService instructorDetailService,
-                                               CourseService courseService) {
+                                               CourseService courseService,
+                                               StudentService studentService) {
 
         return runner -> {
-            findCourseWithReviewsById(courseService, 12L);
+//            createCourseAndStudents(courseService);
+//            addMoreCoursesForStudent(courseService, studentService, 1L);
+            findCourseAndStudents(courseService, 10L);
+            findStudentAndCourses(studentService, 1L);
         };
+    }
+
+    private void addMoreCoursesForStudent(CourseService service, StudentService studentService, Long id) {
+
+        Course course = new Course("Rubik's Cube - How to Speed Cube");
+        var courseResponse = service.save(course);
+
+        var student = studentService.findById(id);
+        service.addStudent(new StudentRequest(student.firstName(), student.lastName(), student.email()),
+                id, courseResponse.id());
+    }
+
+    private void findStudentAndCourses(StudentService service, Long studentId) {
+
+        System.out.println(service.findWithCourseById(studentId));
+    }
+
+    private void findCourseAndStudents(CourseService service, Long courseId) {
+
+        System.out.println(service.findWithStudentById(courseId));
+    }
+
+    private void createCourseAndStudents(CourseService service) {
+
+        Course course = new Course("Pacman = How To Score One Million Points");
+
+        Student student1 = new Student("John", "Doe", "john@mail.com");
+        Student student2 = new Student("Mary", "Public", "mary@mail.com");
+
+        course.addStudent(student1);
+        course.addStudent(student2);
+
+        service.save(course);
     }
 
     private void updateInstructor(InstructorService service, InstructorRequest request, Long id) {
