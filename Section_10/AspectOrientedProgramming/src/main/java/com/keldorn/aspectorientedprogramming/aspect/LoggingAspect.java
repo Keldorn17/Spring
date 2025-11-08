@@ -8,9 +8,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-    @Before("execution(public void addAccount())")
+    // ()   -> matches on method with no arguments
+    // (*)  -> matches on method with one argument of any type
+    // (..) -> matches on method with 0 or more arguments of any type
+//    @Before("execution(public void addAccount())")
+//    @Before("execution(public void com.keldorn.aspectorientedprogramming.dao.AccountDao.addAccount())")
+//    @Before("execution(public void add*())")
+//    @Before("execution(void add*())")
+//    @Before("execution(* add*())")
+//    @Before("execution(* add*(com.keldorn.aspectorientedprogramming.dto.Account, ..))")
+//    @Before("execution(* com.keldorn..add*(..))")
+    @Before("execution(* com.keldorn.aspectorientedprogramming.dao.*.*(..))")
     public void beforeAddAccountAdvice() {
 
-        System.out.println("=====>>> Executing @Before advice on addAccount()");
+        System.out.println("\n=====>>> Executing @Before advice on method()");
     }
 }
