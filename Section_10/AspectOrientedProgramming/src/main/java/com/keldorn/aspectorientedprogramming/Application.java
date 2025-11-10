@@ -26,6 +26,7 @@ public class Application {
     private void demoBeforeAdvice(AccountDao accountDao, MembershipDao membershipDao) {
 
         accountDao.addAccount(new Account(), true);
+        accountDao.getName();
         accountDao.doWork();
         membershipDao.addAccount();
     }
