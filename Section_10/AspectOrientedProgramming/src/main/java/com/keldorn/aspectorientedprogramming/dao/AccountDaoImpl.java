@@ -4,12 +4,23 @@ import com.keldorn.aspectorientedprogramming.dto.Account;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Data
 @Repository
 public class AccountDaoImpl implements AccountDao {
 
     private String name;
     private String serviceCode;
+
+    @Override
+    public List<Account> findAccounts() {
+        return List.of(
+                new Account("John", "Silver"),
+                new Account("Madhu", "Platinum"),
+                new Account("Luca", "Gold")
+        );
+    }
 
     @Override
     public void addAccount(Account account, boolean vipFlag) {

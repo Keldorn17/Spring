@@ -19,13 +19,19 @@ public class Application {
     public CommandLineRunner commandLineRunner(AccountDao accountDao, MembershipDao membershipDao) {
 
         return runner -> {
-            demoBeforeAdvice(accountDao, membershipDao);
+//            demoBeforeAdvice(accountDao, membershipDao);
+            demoAfterReturningAdvice(accountDao);
         };
+    }
+
+    private void demoAfterReturningAdvice(AccountDao accountDao) {
+
+        System.out.println("Accounts: " + accountDao.findAccounts());
     }
 
     private void demoBeforeAdvice(AccountDao accountDao, MembershipDao membershipDao) {
 
-        accountDao.addAccount(new Account(), true);
+        accountDao.addAccount(new Account("Madhu", "Platinum"), true);
         accountDao.getName();
         accountDao.doWork();
         membershipDao.addAccount();
