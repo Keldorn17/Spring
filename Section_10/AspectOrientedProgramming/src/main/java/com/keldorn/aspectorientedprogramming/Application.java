@@ -3,6 +3,7 @@ package com.keldorn.aspectorientedprogramming;
 import com.keldorn.aspectorientedprogramming.dao.AccountDao;
 import com.keldorn.aspectorientedprogramming.dao.MembershipDao;
 import com.keldorn.aspectorientedprogramming.dto.Account;
+import com.keldorn.aspectorientedprogramming.service.TrafficFortuneService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,13 +19,21 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(AccountDao accountDao, MembershipDao membershipDao) {
+    public CommandLineRunner commandLineRunner(AccountDao accountDao,
+                                               MembershipDao membershipDao,
+                                               TrafficFortuneService service) {
 
         return runner -> {
 //            demoBeforeAdvice(accountDao, membershipDao);
 //            demoAfterReturningAdvice(accountDao);
-            demoAfterThrowingAdvice(accountDao);
+//            demoAfterThrowingAdvice(accountDao);
+            demoAroundAdvice(service);
         };
+    }
+
+    private void demoAroundAdvice(TrafficFortuneService service) {
+
+        System.out.println("Fortune: " + service.getFortune());
     }
 
     private void demoAfterThrowingAdvice(AccountDao accountDao) {

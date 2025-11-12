@@ -2,10 +2,8 @@ package com.keldorn.aspectorientedprogramming.aspect;
 
 import com.keldorn.aspectorientedprogramming.dto.Account;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +14,9 @@ import java.util.List;
 @Component
 @Order(2)
 public class LoggingAspect {
+
+    @Pointcut("execution(* com.keldorn.aspectorientedprogramming.dao.AccountDao.findAccounts(..))")
+    private void findAccountsAdvice() {}
 
     @Before("com.keldorn.aspectorientedprogramming.aspect.AopDeclarations.forDaoPackageNoGetterSetter()")
     public void beforeAddAccountAdvice(JoinPoint joinPoint) {
@@ -34,7 +35,7 @@ public class LoggingAspect {
     }
 
     @AfterReturning(
-            pointcut = "execution(* com.keldorn.aspectorientedprogramming.dao.AccountDao.findAccounts(..))",
+            pointcut = "findAccountsAdvice()",
             returning = "result")
     public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) {
 
@@ -50,11 +51,28 @@ public class LoggingAspect {
     }
 
     @AfterThrowing(
-            pointcut = "execution(* com.keldorn.aspectorientedprogramming.dao.AccountDao.findAccounts(..))",
+            pointcut = "findAccountsAdvice()",
             throwing = "throwable")
     public void afterThrowingFindAccountAdvice(JoinPoint joinPoint, Throwable throwable) {
 
         System.out.println("=====>>> Executing @AfterThrowing on method: " + joinPoint.getSignature().toShortString());
         System.out.println("=====>>> The exception is: " + throwable);
+    }
+
+    @After("findAccountsAdvice()")
+    public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint) {
+        System.out.println("=====>>> Executing @After (finally) on method: " + joinPoint.getSignature().toShortString());
+    }
+
+    @Around("execution(* com.keldorn.aspectorientedprogramming.service.*.getFortune(..))")
+    public Object aroundGetFortuneAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        System.out.println("=====>>> Executing @After (finally) on method: " + proceedingJoinPoint.toShortString());
+
+        long begin = System.currentTimeMillis();
+        Object result = proceedingJoinPoint.proceed();
+        long finish = System.currentTimeMillis();
+        System.out.println("Runtime: " + ((double) finish - begin) / 1000 + "s");
+
+        return result;
     }
 }
