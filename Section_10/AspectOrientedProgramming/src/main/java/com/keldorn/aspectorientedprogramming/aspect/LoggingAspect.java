@@ -3,6 +3,7 @@ package com.keldorn.aspectorientedprogramming.aspect;
 import com.keldorn.aspectorientedprogramming.dto.Account;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.core.annotation.Order;
@@ -40,5 +41,20 @@ public class LoggingAspect {
         System.out.println("=====>>> Executing @AfterReturning on method: " + joinPoint.getSignature().toShortString());
 
         System.out.println("=====>>> result is: " + result);
+
+        convertAccountNamesToUpperCase(result);
+    }
+
+    private void convertAccountNamesToUpperCase(List<Account> accounts) {
+        accounts.forEach(a -> a.setName(a.getName().toUpperCase()));
+    }
+
+    @AfterThrowing(
+            pointcut = "execution(* com.keldorn.aspectorientedprogramming.dao.AccountDao.findAccounts(..))",
+            throwing = "throwable")
+    public void afterThrowingFindAccountAdvice(JoinPoint joinPoint, Throwable throwable) {
+
+        System.out.println("=====>>> Executing @AfterThrowing on method: " + joinPoint.getSignature().toShortString());
+        System.out.println("=====>>> The exception is: " + throwable);
     }
 }

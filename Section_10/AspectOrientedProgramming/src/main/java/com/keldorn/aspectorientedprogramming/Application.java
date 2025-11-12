@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class Application {
 
@@ -20,8 +22,20 @@ public class Application {
 
         return runner -> {
 //            demoBeforeAdvice(accountDao, membershipDao);
-            demoAfterReturningAdvice(accountDao);
+//            demoAfterReturningAdvice(accountDao);
+            demoAfterThrowingAdvice(accountDao);
         };
+    }
+
+    private void demoAfterThrowingAdvice(AccountDao accountDao) {
+        List<Account> accounts = null;
+        try {
+            accounts = accountDao.findAccounts(true);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("Accounts: " + accounts);
     }
 
     private void demoAfterReturningAdvice(AccountDao accountDao) {

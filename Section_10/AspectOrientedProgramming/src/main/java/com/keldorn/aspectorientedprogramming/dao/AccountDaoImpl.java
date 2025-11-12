@@ -23,6 +23,15 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
+    public List<Account> findAccounts(boolean tripWire) {
+        if (tripWire) {
+            throw new RuntimeException("Trip wire triggered.");
+        }
+
+        return findAccounts();
+    }
+
+    @Override
     public void addAccount(Account account, boolean vipFlag) {
 
         setName(account.getName());
