@@ -69,7 +69,13 @@ public class LoggingAspect {
         System.out.println("=====>>> Executing @After (finally) on method: " + proceedingJoinPoint.toShortString());
 
         long begin = System.currentTimeMillis();
-        Object result = proceedingJoinPoint.proceed();
+        Object result = null;
+        try {
+            result = proceedingJoinPoint.proceed();
+        } catch (Exception e) {
+            System.out.println("@Around advice: We have a problem: " + e);
+            throw e;
+        }
         long finish = System.currentTimeMillis();
         System.out.println("Runtime: " + ((double) finish - begin) / 1000 + "s");
 
