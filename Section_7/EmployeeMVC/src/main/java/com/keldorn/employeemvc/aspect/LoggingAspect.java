@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 @Component
 public class LoggingAspect {
 
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Pointcut("execution(* com.keldorn.employeemvc.controller.*.*(..))")
     private void controllerPackage() {}
